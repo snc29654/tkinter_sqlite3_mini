@@ -8,7 +8,7 @@ import sys
 class main_window(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        self.label = tk.Label(master,text="There is no data.")
+        self.label = tk.Label(master,text="sqlite3 mini test")
         self.label.pack()
         self.button = tk.Button(master, text="Input String", fg="red",
                                 command=self.askstr)
@@ -16,7 +16,7 @@ class main_window(tk.Frame):
     def set(self, str):
         self.label.config(text=str)
     def askstr(self):
-        data=sd.askstring("test askstring", "input", initialvalue="xxxx")
+        data=sd.askstring("test askstring", "input", initialvalue="initial data")
         self.set(data)
         self.dbwrite(data)
     def dbwrite(self,str):
