@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+from tkinter.scrolledtext import ScrolledText
 import tkinter
 import tkinter as tk
 import tkinter.simpledialog as sd
@@ -13,6 +14,13 @@ class main_window(tk.Frame):
         self.button = tk.Button(master, text="Input String", fg="red",
                                 command=self.askstr)
         self.button.pack(side="left")
+        
+        
+        self.textExample=ScrolledText(root, height=10,width=60, wrap=tkinter.CHAR)
+        self.textExample.pack()
+        self.textExample.place(x=90, y=70)
+        
+        
     def set(self, str):
         self.label.config(text=str)
     def askstr(self):
@@ -38,12 +46,18 @@ class main_window(tk.Frame):
         conn.commit()
         #表示​
         select = 'select * from users'
+        self.textExample.delete("1.0",tkinter.END)
+
         for row in c.execute(select):
             print(row)
+
+            self.textExample.insert(tkinter.END,"\n")
+            self.textExample.insert(tkinter.END,row)
 #=================================================
 # main function
 #=================================================
 if __name__  == '__main__':
     root = tk.Tk()
     mw = main_window(root)
+    root.geometry("640x280")  
     root.mainloop();
