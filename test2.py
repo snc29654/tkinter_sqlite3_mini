@@ -32,7 +32,7 @@ class main_window(tk.Frame):
         self.txt3.insert(tkinter.END,"data3")
 
     def dbwrite(self):
-     dbname = 'personbase2.db'
+     dbname = '../personbase2.db'
      #DBコネクト​
      with closing(sqlite3.connect(dbname)) as conn:
         c = conn.cursor()

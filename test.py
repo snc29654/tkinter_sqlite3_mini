@@ -28,7 +28,7 @@ class main_window(tk.Frame):
         self.set(data)
         self.dbwrite(data)
     def dbwrite(self,str):
-     dbname = 'personbase.db'
+     dbname = '../personbase.db'
      #DBコネクト​
      with closing(sqlite3.connect(dbname)) as conn:
         c = conn.cursor()
