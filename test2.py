@@ -14,12 +14,20 @@ class main_window(tk.Frame):
         
         button1 = tk.Button(root, text = 'DB読み出し', command=self.read_db)
         button1.pack() 
+        button1.place(x=300, y=30)
         
         button2 = tk.Button(root, text = 'DB書き込み', command=self.write_db)
         button2.pack() 
+        button2.place(x=380, y=30)
 
         button3 = tk.Button(root, text = '表示クリア', command=self.text_clear)
         button3.pack() 
+        button3.place(x=460, y=30)
+
+        button4 = tk.Button(root, text = 'DB消去', command=self.clear_db)
+        button4.pack() 
+        button4.place(x=540, y=30)
+
 
         self.textExample=ScrolledText(root, height=13,width=60, wrap=tkinter.CHAR)
         self.textExample.pack()
@@ -55,6 +63,25 @@ class main_window(tk.Frame):
         c.execute(sql, user)
         conn.commit()
 
+    def dbclear(self):
+     dbname = '../personbase2.db'
+     #DBコネクト​
+     with closing(sqlite3.connect(dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id int, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64))'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            print("database already exist")
+        #データインサート​
+        sql = 'delete from users'
+        #user = (1, self.data1, self.data2, self.data3)
+        c.execute(sql)
+        conn.commit()
+
+
     def dbread(self):
      dbname = '../personbase2.db'
      #DBコネクト​
@@ -87,6 +114,10 @@ class main_window(tk.Frame):
     def read_db(self):
         self.dbread()
 
+    def clear_db(self):
+        self.dbclear()
+
+
     def text_clear(self):
         self.textExample.delete("1.0",tkinter.END)
 
@@ -96,5 +127,5 @@ class main_window(tk.Frame):
 if __name__  == '__main__':
     root = tk.Tk()
     mw = main_window(root)
-    root.geometry("640x280")  
+    root.geometry("640x380")  
     root.mainloop();
