@@ -12,12 +12,18 @@ class main_window(tk.Frame):
         self.label = tk.Label(master,text="sqlite3 mini test")
         self.label.pack()
         
-        button1 = tk.Button(root, text = 'DB書き込み', command=self.suspend)
-        button1.pack(side="left") 
+        button1 = tk.Button(root, text = 'DB読み出し', command=self.read_db)
+        button1.pack() 
         
-        self.textExample=ScrolledText(root, height=10,width=60, wrap=tkinter.CHAR)
+        button2 = tk.Button(root, text = 'DB書き込み', command=self.write_db)
+        button2.pack() 
+
+        button3 = tk.Button(root, text = '表示クリア', command=self.text_clear)
+        button3.pack() 
+
+        self.textExample=ScrolledText(root, height=13,width=60, wrap=tkinter.CHAR)
         self.textExample.pack()
-        self.textExample.place(x=150, y=70)
+        self.textExample.place(x=150, y=100)
         
         self.txt1= tkinter.Entry(width=10)
         self.txt1.place(x=10, y=30)
@@ -48,6 +54,19 @@ class main_window(tk.Frame):
         user = (1, self.data1, self.data2, self.data3)
         c.execute(sql, user)
         conn.commit()
+
+    def dbread(self):
+     dbname = '../personbase2.db'
+     #DBコネクト​
+     with closing(sqlite3.connect(dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id int, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64))'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            print("database already exist")
         #表示​
         select = 'select * from users'
         self.textExample.delete("1.0",tkinter.END)
@@ -57,13 +76,20 @@ class main_window(tk.Frame):
 
             self.textExample.insert(tkinter.END,"\n")
             self.textExample.insert(tkinter.END,row)
+
             
-    def suspend(self):
+    def write_db(self):
         self.data1 =self.txt1.get()
         self.data2 =self.txt2.get()
         self.data3 =self.txt3.get()
         self.dbwrite()
             
+    def read_db(self):
+        self.dbread()
+
+    def text_clear(self):
+        self.textExample.delete("1.0",tkinter.END)
+
 #=================================================
 # main function
 #=================================================
