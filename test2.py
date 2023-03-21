@@ -63,6 +63,11 @@ class main_window(tk.Frame):
         c.execute(sql, user)
         conn.commit()
 
+
+        self.textExample.insert(tkinter.END,"\n")
+        self.textExample.insert(tkinter.END,"DB書き込みしました")
+
+
     def dbclear(self):
      dbname = '../personbase2.db'
      #DBコネクト​
@@ -81,6 +86,8 @@ class main_window(tk.Frame):
         c.execute(sql)
         conn.commit()
 
+        self.textExample.insert(tkinter.END,"\n")
+        self.textExample.insert(tkinter.END,"DB消去しました")
 
     def dbread(self):
      dbname = '../personbase2.db'
