@@ -50,7 +50,7 @@ class main_window(tk.Frame):
      #DBコネクト​
      with closing(sqlite3.connect(dbname)) as conn:
         c = conn.cursor()
-        create_table = '''create table users (id int, data1 varchar(64),
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64))'''
         #テーブルクリエイト​
         try:
@@ -58,8 +58,8 @@ class main_window(tk.Frame):
         except:
             print("database already exist")
         #データインサート​
-        sql = 'insert into users (id, data1, data2, data3) values (?,?,?,?)'
-        user = (1, self.data1, self.data2, self.data3)
+        sql = 'insert into users (data1, data2, data3) values (?,?,?)'
+        user = (self.data1, self.data2, self.data3)
         c.execute(sql, user)
         conn.commit()
 
@@ -73,7 +73,7 @@ class main_window(tk.Frame):
      #DBコネクト​
      with closing(sqlite3.connect(dbname)) as conn:
         c = conn.cursor()
-        create_table = '''create table users (id int, data1 varchar(64),
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64))'''
         #テーブルクリエイト​
         try:
@@ -94,7 +94,7 @@ class main_window(tk.Frame):
      #DBコネクト​
      with closing(sqlite3.connect(dbname)) as conn:
         c = conn.cursor()
-        create_table = '''create table users (id int, data1 varchar(64),
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64))'''
         #テーブルクリエイト​
         try:
