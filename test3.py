@@ -122,6 +122,9 @@ class main_window(tk.Frame):
         for row in c.execute(select):
             print(row)
 
+
+        for row in c.execute('select id ,data1 ,data2, data3 from users'):
+            blob = row[0]
             self.textExample.insert(tkinter.END,"\n")
             self.textExample.insert(tkinter.END,row)
 
