@@ -125,7 +125,7 @@ class main_window(tk.Frame):
             self.textExample.insert(tkinter.END,"\n")
             self.textExample.insert(tkinter.END,row)
 
-        for row in c.execute('select data4 from users limit 1'):
+        for row in c.execute('select data4 from users'):
             blob = row[0]
         #バイナリ出力
         with open(wf, 'wb') as f:
