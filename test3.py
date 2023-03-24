@@ -6,6 +6,10 @@ import tkinter.simpledialog as sd
 import sqlite3
 from contextlib import closing
 import sys
+from tkinter import filedialog
+from tkinter import filedialog as tkFileDialog
+import os
+
 class main_window(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
@@ -44,6 +48,13 @@ class main_window(tk.Frame):
         self.txt3= tkinter.Entry(width=10)
         self.txt3.place(x=210, y=30)
         self.txt3.insert(tkinter.END,"data3")
+
+
+        button5= tk.Button(root, text=u'ファイル選択', command=self.button5_clicked)  
+        button5.pack() 
+        button5.place(x=300, y=52) 
+
+
 
     def dbwrite(self):
      dbname = '../personbase3.db'
@@ -121,11 +132,18 @@ class main_window(tk.Frame):
             f.write(blob)
             
     def write_db(self):
+        global filenames
+
+        for file in self.filenames:
+            file_c = file.replace('\\', '\\\\');
+            print(file_c)
+
+
+        
         self.data1 =self.txt1.get()
         self.data2 =self.txt2.get()
         self.data3 =self.txt3.get()
-
-        with open('C:\\github\\tkinter_sqlite3_mini\\sample.jpg', 'rb') as f:
+        with open(file_c, 'rb') as f:
             self.data4 = f.read()
 
         self.dbwrite()
@@ -140,6 +158,17 @@ class main_window(tk.Frame):
 
     def text_clear(self):
         self.textExample.delete("1.0",tkinter.END)
+
+    def button5_clicked(self):  
+        global filenames
+
+
+        fTyp = [('', '*')] 
+        iDir = os.path.abspath(os.path.dirname(__file__)) 
+        filenames = tkFileDialog.askopenfilenames(filetypes= [("Image file", ".bmp .png .jpg .tif"), ("Bitmap", ".bmp"), ("PNG", ".png"), ("JPEG", ".jpg"), ("Tiff", ".tif") ], initialdir=iDir)
+        print(filenames)
+        self.filenames=filenames
+        self.dir = 0
 
 #=================================================
 # main function
