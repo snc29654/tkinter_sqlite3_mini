@@ -50,10 +50,14 @@ class main_window(tk.Frame):
         self.txt3.insert(tkinter.END,"data3")
 
 
-        button5= tk.Button(root, text=u'ファイル選択', command=self.button5_clicked)  
+        button5= tk.Button(root, text=u'jpgファイル選択', command=self.button5_clicked)  
         button5.pack() 
-        button5.place(x=300, y=52) 
+        button5.place(x=300, y=55) 
 
+        button6= tk.Button(root, text=u'jpg読み出し', command=self.read_jpg)  
+        button6.pack() 
+        button6.place(x=400, y=55) 
+        self.dir = 0
 
 
     def dbwrite(self):
@@ -134,8 +138,64 @@ class main_window(tk.Frame):
         with open(wf, 'wb') as f:
             f.write(blob)
             
+    def dbread(self):
+     wf = 'C:\\github\\tkinter_sqlite3_mini\\write.jpg' #書き込み画像ファイルパス
+  
+  
+     dbname = '../personbase3.db'
+     #DBコネクト​
+     with closing(sqlite3.connect(dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64),data4 img)'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            print("database already exist")
+        #表示​
+        self.textExample.delete("1.0",tkinter.END)
+
+
+
+        for row in c.execute('select id ,data1 ,data2, data3 from users'):
+            blob = row[0]
+            self.textExample.insert(tkinter.END,"\n")
+            self.textExample.insert(tkinter.END,row)
+
+
+    def jpgread(self):
+     wf = 'C:\\github\\tkinter_sqlite3_mini\\write.jpg' #書き込み画像ファイルパス
+  
+  
+     dbname = '../personbase3.db'
+     #DBコネクト​
+     with closing(sqlite3.connect(dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64),data4 img)'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            print("database already exist")
+        #表示​
+        select = 'select * from users'
+        self.textExample.delete("1.0",tkinter.END)
+
+        for row in c.execute('select data4 from users'):
+            blob = row[0]
+        #バイナリ出力
+        with open(wf, 'wb') as f:
+            f.write(blob)
+
+
     def write_db(self):
         global filenames
+
+        if(self.dir==0):
+            self.textExample.insert(tkinter.END,"jpgが未指定\n")
+            return
 
         for file in self.filenames:
             file_c = file.replace('\\', '\\\\');
@@ -155,6 +215,11 @@ class main_window(tk.Frame):
     def read_db(self):
         self.dbread()
 
+    def read_jpg(self):
+        self.jpgread()
+
+
+
     def clear_db(self):
         self.dbclear()
 
@@ -171,7 +236,7 @@ class main_window(tk.Frame):
         filenames = tkFileDialog.askopenfilenames(filetypes= [("Image file", ".bmp .png .jpg .tif"), ("Bitmap", ".bmp"), ("PNG", ".png"), ("JPEG", ".jpg"), ("Tiff", ".tif") ], initialdir=iDir)
         print(filenames)
         self.filenames=filenames
-        self.dir = 0
+        self.dir = 1
 
 #=================================================
 # main function
