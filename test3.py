@@ -108,39 +108,6 @@ class main_window(tk.Frame):
         self.textExample.insert(tkinter.END,"\n")
         self.textExample.insert(tkinter.END,"DB消去しました")
 
-    def dbread(self):
-     wf = 'C:\\github\\tkinter_sqlite3_mini\\write.jpg' #書き込み画像ファイルパス
-  
-  
-     dbname = '../personbase3.db'
-     #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
-        c = conn.cursor()
-        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
-                      data2 varchar(64), data3 varchar(64),data4 img)'''
-        #テーブルクリエイト​
-        try:
-            c.execute(create_table)
-        except:
-            print("database already exist")
-        #表示​
-        select = 'select * from users'
-        self.textExample.delete("1.0",tkinter.END)
-
-        for row in c.execute(select):
-            print(row)
-
-
-        for row in c.execute('select id ,data1 ,data2, data3 from users'):
-            blob = row[0]
-            self.textExample.insert(tkinter.END,"\n")
-            self.textExample.insert(tkinter.END,row)
-
-        for row in c.execute('select data4 from users'):
-            blob = row[0]
-        #バイナリ出力
-        with open(wf, 'wb') as f:
-            f.write(blob)
             
     def dbread(self):
      wf = 'C:\\github\\tkinter_sqlite3_mini\\write.jpg' #書き込み画像ファイルパス
