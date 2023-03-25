@@ -247,7 +247,8 @@ class main_window(tk.Frame):
         img2 = ImageTk.PhotoImage(img2)
 
         canvas = tkinter.Canvas(width=600, height=500)
-        canvas.place(x=0, y=0)
+        canvas.pack()
+        canvas.place(x=100, y=300)
         item = canvas.create_image(30, 30, image=img2, anchor=tkinter.NW)
         canvas.itemconfig(item,image=img2)
         root.mainloop()
@@ -272,5 +273,5 @@ class main_window(tk.Frame):
 if __name__  == '__main__':
     root = tk.Tk()
     mw = main_window(root)
-    root.geometry("640x380")  
+    root.geometry("640x650")  
     root.mainloop();
