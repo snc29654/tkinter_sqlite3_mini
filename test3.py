@@ -9,6 +9,7 @@ import sys
 from tkinter import filedialog
 from tkinter import filedialog as tkFileDialog
 import os
+from PIL import Image, ImageTk
 
 class main_window(tk.Frame):
     def __init__(self, master):
@@ -42,11 +43,11 @@ class main_window(tk.Frame):
         self.txt1.insert(tkinter.END,"data1")
 
         self.txt2= tkinter.Entry(width=10)
-        self.txt2.place(x=110, y=30)
+        self.txt2.place(x=10, y=50)
         self.txt2.insert(tkinter.END,"data2")
 
         self.txt3= tkinter.Entry(width=10)
-        self.txt3.place(x=210, y=30)
+        self.txt3.place(x=10, y=70)
         self.txt3.insert(tkinter.END,"data3")
 
 
@@ -189,6 +190,8 @@ class main_window(tk.Frame):
         with open(wf, 'wb') as f:
             f.write(blob)
 
+        self.select_one_image(wf)
+
 
     def write_db(self):
         global filenames
@@ -226,6 +229,25 @@ class main_window(tk.Frame):
 
     def text_clear(self):
         self.textExample.delete("1.0",tkinter.END)
+
+
+    def select_one_image(self,n):
+
+        img2 = Image.open(n)
+        x = 300
+        y = 300
+        img2.thumbnail((x, y), Image.ANTIALIAS)
+
+        img2 = ImageTk.PhotoImage(img2)
+
+        canvas = tkinter.Canvas(width=600, height=500)
+        canvas.place(x=0, y=0)
+        item = canvas.create_image(30, 30, image=img2, anchor=tkinter.NW)
+        canvas.itemconfig(item,image=img2)
+        root.mainloop()
+
+
+
 
     def button5_clicked(self):  
         global filenames
