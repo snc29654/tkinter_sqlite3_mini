@@ -50,6 +50,9 @@ class main_window(tk.Frame):
         self.txt3.place(x=10, y=70)
         self.txt3.insert(tkinter.END,"data3")
 
+        self.txt4= tkinter.Entry(width=10)
+        self.txt4.place(x=10, y=90)
+        self.txt4.insert(tkinter.END,"id")
 
         button5= tk.Button(root, text=u'jpgファイル選択', command=self.button5_clicked)  
         button5.pack() 
@@ -166,6 +169,9 @@ class main_window(tk.Frame):
 
 
     def jpgread(self):
+        
+     self.id =self.txt4.get()
+   
      wf = 'C:\\github\\tkinter_sqlite3_mini\\write.jpg' #書き込み画像ファイルパス
   
   
@@ -184,7 +190,7 @@ class main_window(tk.Frame):
         select = 'select * from users'
         self.textExample.delete("1.0",tkinter.END)
 
-        for row in c.execute('select data4 from users'):
+        for row in c.execute('select data4 from users where id ='+'"'+str(self.id)+'"'):
             blob = row[0]
         #バイナリ出力
         with open(wf, 'wb') as f:
