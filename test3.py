@@ -110,7 +110,7 @@ class main_window(tk.Frame):
 
             
     def dbread(self):
-     wf = 'C:\\github\\tkinter_sqlite3_mini\\write.jpg' #書き込み画像ファイルパス
+     wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
   
   
      dbname = '../personbase3.db'
@@ -139,7 +139,7 @@ class main_window(tk.Frame):
         
      self.id =self.txt4.get()
    
-     wf = 'C:\\github\\tkinter_sqlite3_mini\\write.jpg' #書き込み画像ファイルパス
+     wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
   
   
      dbname = '../personbase3.db'
