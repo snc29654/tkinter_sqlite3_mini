@@ -154,8 +154,24 @@ class main_window(tk.Frame):
         except:
             print("database already exist")
         #表示​
-        select = 'select * from users'
         self.textExample.delete("1.0",tkinter.END)
+
+
+        for row in c.execute('select data1 from users where id ='+'"'+str(self.id)+'"'):
+            data1 = row[0]
+        self.txt1.delete(0, tk.END)         
+        self.txt1.insert(tkinter.END,data1)
+
+        for row in c.execute('select data2 from users where id ='+'"'+str(self.id)+'"'):
+            data2 = row[0]
+        self.txt2.delete(0, tk.END)         
+        self.txt2.insert(tkinter.END,data2)
+
+        for row in c.execute('select data3 from users where id ='+'"'+str(self.id)+'"'):
+            data3 = row[0]
+        self.txt3.delete(0, tk.END)         
+        self.txt3.insert(tkinter.END,data3)
+
 
         for row in c.execute('select data4 from users where id ='+'"'+str(self.id)+'"'):
             blob = row[0]
@@ -164,6 +180,8 @@ class main_window(tk.Frame):
             f.write(blob)
 
         self.select_one_image(wf)
+
+
 
 
     def write_db(self):
