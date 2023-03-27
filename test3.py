@@ -157,25 +157,18 @@ class main_window(tk.Frame):
         self.textExample.delete("1.0",tkinter.END)
 
 
-        for row in c.execute('select data1 from users where id ='+'"'+str(self.id)+'"'):
-            data1 = row[0]
+        for row in c.execute('select * from users where id ='+'"'+str(self.id)+'"'):
+            data1 = row[1]
+            data2 = row[2]
+            data3 = row[3]
+            blob =  row[4]
         self.txt1.delete(0, tk.END)         
         self.txt1.insert(tkinter.END,data1)
-
-        for row in c.execute('select data2 from users where id ='+'"'+str(self.id)+'"'):
-            data2 = row[0]
         self.txt2.delete(0, tk.END)         
         self.txt2.insert(tkinter.END,data2)
-
-        for row in c.execute('select data3 from users where id ='+'"'+str(self.id)+'"'):
-            data3 = row[0]
         self.txt3.delete(0, tk.END)         
         self.txt3.insert(tkinter.END,data3)
 
-
-        for row in c.execute('select data4 from users where id ='+'"'+str(self.id)+'"'):
-            blob = row[0]
-        #バイナリ出力
         with open(wf, 'wb') as f:
             f.write(blob)
 
