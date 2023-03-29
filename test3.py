@@ -14,24 +14,24 @@ from PIL import Image, ImageTk
 class main_window(tk.Frame):
     def __init__(self, master):
         tk.Frame.__init__(self, master)
-        self.label = tk.Label(master,text="sqlite3 mini test")
+        self.label = tk.Label(master,text="sqlite3 jpg test")
         self.label.pack()
         
         button1 = tk.Button(root, text = 'DB読み出し', command=self.read_db)
         button1.pack() 
-        button1.place(x=300, y=30)
+        button1.place(x=280, y=55)
         
         button2 = tk.Button(root, text = 'DB書き込み', command=self.write_db)
         button2.pack() 
-        button2.place(x=380, y=30)
+        button2.place(x=200, y=55)
 
         button3 = tk.Button(root, text = '表示クリア', command=self.text_clear)
         button3.pack() 
-        button3.place(x=460, y=30)
+        button3.place(x=480, y=80)
 
         button4 = tk.Button(root, text = 'DB消去', command=self.clear_db)
         button4.pack() 
-        button4.place(x=540, y=30)
+        button4.place(x=560, y=80)
 
 
         self.textExample=ScrolledText(root, height=13,width=75, wrap=tkinter.CHAR)
@@ -56,11 +56,11 @@ class main_window(tk.Frame):
 
         button5= tk.Button(root, text=u'jpgファイル選択', command=self.button5_clicked)  
         button5.pack() 
-        button5.place(x=300, y=55) 
+        button5.place(x=100, y=55) 
 
         button6= tk.Button(root, text=u'jpg読み出し', command=self.read_jpg)  
         button6.pack() 
-        button6.place(x=400, y=55) 
+        button6.place(x=360, y=55) 
         self.dir = 0
 
 
@@ -154,7 +154,7 @@ class main_window(tk.Frame):
         except:
             print("database already exist")
         #表示​
-        self.textExample.delete("1.0",tkinter.END)
+        #self.textExample.delete("1.0",tkinter.END)
 
 
         for row in c.execute('select * from users where id ='+'"'+str(self.id)+'"'):
