@@ -34,9 +34,9 @@ class main_window(tk.Frame):
         button4.place(x=540, y=30)
 
 
-        self.textExample=ScrolledText(root, height=13,width=60, wrap=tkinter.CHAR)
+        self.textExample=ScrolledText(root, height=13,width=75, wrap=tkinter.CHAR)
         self.textExample.pack()
-        self.textExample.place(x=150, y=100)
+        self.textExample.place(x=80, y=120)
         
         self.txt1= tkinter.Entry(width=10)
         self.txt1.place(x=10, y=30)
@@ -70,15 +70,15 @@ class main_window(tk.Frame):
      with closing(sqlite3.connect(dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
-                      data2 varchar(64), data3 varchar(64),data4 img)'''
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
         #テーブルクリエイト​
         try:
             c.execute(create_table)
         except:
             print("database already exist")
         #データインサート​
-        sql = 'insert into users (data1, data2, data3,data4) values (?,?,?,?)'
-        user = (self.data1, self.data2, self.data3,self.data4)
+        sql = 'insert into users (data1, data2, data3, path, data_jpg) values (?,?,?,?,?)'
+        user = (self.data1, self.data2, self.data3, self.path, self.data_jpg)
         c.execute(sql, user)
         conn.commit()
 
@@ -93,7 +93,7 @@ class main_window(tk.Frame):
      with closing(sqlite3.connect(dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
-                      data2 varchar(64), data3 varchar(64),data4 img)'''
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
         #テーブルクリエイト​
         try:
             c.execute(create_table)
@@ -118,7 +118,7 @@ class main_window(tk.Frame):
      with closing(sqlite3.connect(dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
-                      data2 varchar(64), data3 varchar(64),data4 img)'''
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
         #テーブルクリエイト​
         try:
             c.execute(create_table)
@@ -129,7 +129,7 @@ class main_window(tk.Frame):
 
 
 
-        for row in c.execute('select id ,data1 ,data2, data3 from users'):
+        for row in c.execute('select id ,data1 ,data2, data3, path from users'):
             blob = row[0]
             self.textExample.insert(tkinter.END,"\n")
             self.textExample.insert(tkinter.END,row)
@@ -147,7 +147,7 @@ class main_window(tk.Frame):
      with closing(sqlite3.connect(dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
-                      data2 varchar(64), data3 varchar(64),data4 img)'''
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
         #テーブルクリエイト​
         try:
             c.execute(create_table)
@@ -161,7 +161,7 @@ class main_window(tk.Frame):
             data1 = row[1]
             data2 = row[2]
             data3 = row[3]
-            blob =  row[4]
+            blob =  row[5]
         self.txt1.delete(0, tk.END)         
         self.txt1.insert(tkinter.END,data1)
         self.txt2.delete(0, tk.END)         
@@ -188,13 +188,14 @@ class main_window(tk.Frame):
             file_c = file.replace('\\', '\\\\');
             print(file_c)
 
+        self.path=file_c
 
         
         self.data1 =self.txt1.get()
         self.data2 =self.txt2.get()
         self.data3 =self.txt3.get()
         with open(file_c, 'rb') as f:
-            self.data4 = f.read()
+            self.data_jpg = f.read()
 
         self.dbwrite()
  
