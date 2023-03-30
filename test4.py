@@ -150,14 +150,14 @@ class main_window(tk.Frame):
 
         frame = tkinter.Frame(master=None)
         scrollbar = tkinter.Scrollbar(master=frame, orient="vertical")
-        listbox = tkinter.Listbox(master=frame,  bg="white", height=10, yscrollcommand=scrollbar.set)
+        self.listbox = tkinter.Listbox(master=frame,  bg="white", height=10, yscrollcommand=scrollbar.set)
         for row in c.execute('select id ,data1 ,data2, data3, path from users'):
-            listbox.insert(tkinter.END, row[0])
-        scrollbar.config(command=listbox.yview)
+            self.listbox.insert(tkinter.END, row[0])
+        scrollbar.config(command=self.listbox.yview)
         frame.pack(side=RIGHT, anchor=NW)
         scrollbar.pack(side=tkinter.RIGHT, fill="y")
-        listbox.pack(side = tk.TOP)
-        listbox.bind("<<ListboxSelect>>", self.get_index)
+        self.listbox.pack(side = tk.TOP)
+        self.listbox.bind("<<ListboxSelect>>", self.get_index)
 
     def jpgread(self):
         
@@ -237,6 +237,7 @@ class main_window(tk.Frame):
 
 
     def text_clear(self):
+        self.listbox.destroy()
         self.textExample.delete("1.0",tkinter.END)
 
 
