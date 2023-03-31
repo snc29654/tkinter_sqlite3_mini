@@ -1,10 +1,10 @@
 # tkinter_sqlite3_mini
 test.py    easy 
 
-test2.py   textbox 
+test2.py   textbox to sqlite  
 
-test3.py   jpg 
+test3.py   jpg to sqlite  
 
-test4.py   jpg list 
+test4.py   jpg listbox  
  
 
