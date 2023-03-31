@@ -77,6 +77,14 @@ class main_window(tk.Frame):
         
         self.dir = 0
 
+        self.frame = tkinter.Frame(master=None)
+        scrollbar = tkinter.Scrollbar(master=self.frame, orient="vertical")
+        self.listbox = tkinter.Listbox(master=self.frame,  bg="white", height=10, yscrollcommand=scrollbar.set)
+        scrollbar.config(command=self.listbox.yview)
+        self.frame.pack(side=RIGHT, anchor=NW)
+        scrollbar.pack(side=tkinter.RIGHT, fill="y")
+        self.listbox.pack(side = tk.TOP)
+        self.listbox.bind("<<ListboxSelect>>", self.get_index)
 
     def dbwrite(self):
      dbname = '../personbase3.db'
@@ -143,21 +151,15 @@ class main_window(tk.Frame):
 
 
 
+        self.listbox.delete(0, tkinter.END)
         for row in c.execute('select id ,data1 ,data2, data3, path from users'):
             blob = row[0]
             self.textExample.insert(tkinter.END,"\n")
             self.textExample.insert(tkinter.END,row)
 
-        frame = tkinter.Frame(master=None)
-        scrollbar = tkinter.Scrollbar(master=frame, orient="vertical")
-        self.listbox = tkinter.Listbox(master=frame,  bg="white", height=10, yscrollcommand=scrollbar.set)
+
         for row in c.execute('select id ,data1 ,data2, data3, path from users'):
             self.listbox.insert(tkinter.END, row[0])
-        scrollbar.config(command=self.listbox.yview)
-        frame.pack(side=RIGHT, anchor=NW)
-        scrollbar.pack(side=tkinter.RIGHT, fill="y")
-        self.listbox.pack(side = tk.TOP)
-        self.listbox.bind("<<ListboxSelect>>", self.get_index)
 
     def jpgread(self):
         
@@ -237,7 +239,6 @@ class main_window(tk.Frame):
 
 
     def text_clear(self):
-        self.listbox.destroy()
         self.textExample.delete("1.0",tkinter.END)
 
 
