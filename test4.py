@@ -31,6 +31,11 @@ class main_window(tk.Frame):
         button1 = tk.Button(root, text = 'DB読み出し', command=self.read_db)
         button1.pack() 
         button1.place(x=280, y=55)
+
+        button6 = tk.Button(root, text = '1レコード消去', command=self.delete_one)
+        button6.pack() 
+        button6.place(x=360, y=55)
+
         
         button2 = tk.Button(root, text = 'DB書き込み', command=self.write_db)
         button2.pack() 
@@ -129,6 +134,27 @@ class main_window(tk.Frame):
 
         self.textExample.insert(tkinter.END,"\n")
         self.textExample.insert(tkinter.END,"DB消去しました")
+
+    def delete_one(self):
+     dbname = '../personbase3.db'
+     #DBコネクト​
+     with closing(sqlite3.connect(dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            print("database already exist")
+        #データインサート​
+        sql = 'delete from users where id ='+'"'+str(self.id)+'"'
+        #user = (1, self.data1, self.data2, self.data3)
+        c.execute(sql)
+        conn.commit()
+
+        self.textExample.insert(tkinter.END,"\n")
+        self.textExample.insert(tkinter.END,"1レコード消去しました")
 
             
     def dbread(self):
