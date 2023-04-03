@@ -306,12 +306,16 @@ class main_window(tk.Frame):
     
         value = tkinter.StringVar()
  
-        index = event.widget.curselection()
+        item_index = self.listbox.curselection()
+        # リストが１つ以上選択されている場合だけ処理
+        if len(item_index) > 0:
+ 
+            index = event.widget.curselection()
 
-        n = event.widget.get(index)
-        value.set(n)
-        self.id=n
-        self.jpgread()
+            n = event.widget.get(index)
+            value.set(n)
+            self.id=n
+            self.jpgread()
     
 #=================================================
 # main function
