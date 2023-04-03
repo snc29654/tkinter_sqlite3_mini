@@ -287,6 +287,23 @@ class main_window(tk.Frame):
         root.mainloop()
 
 
+    def prev_image(self,n):
+    
+        img2 = Image.open(n)
+        x = 300
+        y = 300
+        img2.thumbnail((x, y), Image.ANTIALIAS)
+
+        img2 = ImageTk.PhotoImage(img2)
+
+        canvas = tkinter.Canvas(width=600, height=500)
+        canvas.pack()
+        canvas.place(x=100, y=300)
+        item = canvas.create_image(30, 30, image=img2, anchor=tkinter.NW)
+        canvas.itemconfig(item,image=img2)
+
+
+        root.mainloop()
 
 
     def button5_clicked(self):  
@@ -299,6 +316,12 @@ class main_window(tk.Frame):
         print(filenames)
         self.filenames=filenames
         self.dir = 1
+
+
+        for file in self.filenames:
+            file_c = file.replace('\\', '\\\\');
+       
+        self.prev_image(file_c)
 
         
         
