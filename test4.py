@@ -152,7 +152,7 @@ class main_window(tk.Frame):
 
         self.textExample.insert(tkinter.END,"\n")
         self.textExample.insert(tkinter.END,"1レコード消去しました")
-
+        self.button6.destroy()
             
     def dbread(self):
      wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
@@ -280,9 +280,9 @@ class main_window(tk.Frame):
         item = canvas.create_image(30, 30, image=img2, anchor=tkinter.NW)
         canvas.itemconfig(item,image=img2)
 
-        button6 = tk.Button(root, text = '1レコード消去', command=self.delete_one)
-        button6.pack() 
-        button6.place(x=360, y=55)
+        self.button6 = tk.Button(root, text = '1レコード消去', command=self.delete_one)
+        self.button6.pack() 
+        self.button6.place(x=360, y=55)
 
         root.mainloop()
 
