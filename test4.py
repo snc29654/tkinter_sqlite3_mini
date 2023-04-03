@@ -32,9 +32,6 @@ class main_window(tk.Frame):
         button1.pack() 
         button1.place(x=280, y=55)
 
-        button6 = tk.Button(root, text = '1レコード消去', command=self.delete_one)
-        button6.pack() 
-        button6.place(x=360, y=55)
 
         
         button2 = tk.Button(root, text = 'DB書き込み', command=self.write_db)
@@ -56,15 +53,15 @@ class main_window(tk.Frame):
         
         self.txt1= tkinter.Entry(width=10)
         self.txt1.place(x=10, y=30)
-        self.txt1.insert(tkinter.END,"data1")
+        self.txt1.insert(tkinter.END,"コメント1")
 
         self.txt2= tkinter.Entry(width=10)
         self.txt2.place(x=10, y=50)
-        self.txt2.insert(tkinter.END,"data2")
+        self.txt2.insert(tkinter.END,"コメント2")
 
         self.txt3= tkinter.Entry(width=10)
         self.txt3.place(x=10, y=70)
-        self.txt3.insert(tkinter.END,"data3")
+        self.txt3.insert(tkinter.END,"コメント3")
 
         #self.txt4= tkinter.Entry(width=10)
         #self.txt4.place(x=10, y=90)
@@ -282,6 +279,11 @@ class main_window(tk.Frame):
         canvas.place(x=100, y=300)
         item = canvas.create_image(30, 30, image=img2, anchor=tkinter.NW)
         canvas.itemconfig(item,image=img2)
+
+        button6 = tk.Button(root, text = '1レコード消去', command=self.delete_one)
+        button6.pack() 
+        button6.place(x=360, y=55)
+
         root.mainloop()
 
 
