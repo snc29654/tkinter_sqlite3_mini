@@ -32,6 +32,9 @@ class main_window(tk.Frame):
         button1.pack() 
         button1.place(x=280, y=55)
 
+        button7 = tk.Button(root, text = 'DB更新', command=self.update_db)
+        button7.pack() 
+        button7.place(x=360, y=80)
 
         
         button2 = tk.Button(root, text = 'DB書き込み', command=self.write_db)
@@ -153,6 +156,36 @@ class main_window(tk.Frame):
         self.textExample.insert(tkinter.END,"\n")
         self.textExample.insert(tkinter.END,"1レコード消去しました")
         self.button6.destroy()
+
+
+    def dbupdate(self):
+     dbname = '../personbase3.db'
+     #DBコネクト​
+     with closing(sqlite3.connect(dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            print("database already exist")
+        #データインサート​
+        sql = 'update users set data1 = '+ '"'+str(self.data1)+'"'+ ' where id ='+' "'+str(self.id)+'";'
+        c.execute(sql)
+        conn.commit()
+        sql = 'update users set data2 = '+ '"'+str(self.data2)+'"'+ ' where id ='+' "'+str(self.id)+'";'
+        c.execute(sql)
+        conn.commit()
+        sql = 'update users set data3 = '+ '"'+str(self.data3)+'"'+ ' where id ='+' "'+str(self.id)+'";'
+        c.execute(sql)
+        conn.commit()
+
+        self.textExample.insert(tkinter.END,"\n")
+        self.textExample.insert(tkinter.END,"更新しました")
+        self.button6.destroy()
+
+
             
     def dbread(self):
      wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
@@ -260,6 +293,11 @@ class main_window(tk.Frame):
     def clear_db(self):
         self.dbclear()
 
+    def update_db(self):
+        self.data1 =self.txt1.get()
+        self.data2 =self.txt2.get()
+        self.data3 =self.txt3.get()
+        self.dbupdate()
 
     def text_clear(self):
         self.textExample.delete("1.0",tkinter.END)
