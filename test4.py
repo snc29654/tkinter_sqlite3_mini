@@ -30,40 +30,40 @@ class main_window(tk.Frame):
         
         button1 = tk.Button(root, text = 'DB読み出し', command=self.read_db)
         button1.pack() 
-        button1.place(x=280, y=55)
+        button1.place(x=280, y=90)
 
         button7 = tk.Button(root, text = 'DB更新', command=self.update_db)
         button7.pack() 
-        button7.place(x=360, y=80)
+        button7.place(x=360, y=90)
 
         
         button2 = tk.Button(root, text = 'DB書き込み', command=self.write_db)
         button2.pack() 
-        button2.place(x=200, y=55)
+        button2.place(x=200, y=90)
 
         button3 = tk.Button(root, text = '表示クリア', command=self.text_clear)
         button3.pack() 
-        button3.place(x=480, y=80)
+        button3.place(x=480, y=90)
 
         button4 = tk.Button(root, text = 'DB消去', command=self.clear_db)
         button4.pack() 
-        button4.place(x=560, y=80)
+        button4.place(x=560, y=90)
 
 
         self.textExample=ScrolledText(root, height=13,width=75, wrap=tkinter.CHAR)
         self.textExample.pack()
         self.textExample.place(x=80, y=120)
         
-        self.txt1= tkinter.Entry(width=10)
-        self.txt1.place(x=10, y=30)
+        self.txt1= tkinter.Entry(width=50)
+        self.txt1.place(x=80, y=20)
         self.txt1.insert(tkinter.END,"コメント1")
 
-        self.txt2= tkinter.Entry(width=10)
-        self.txt2.place(x=10, y=50)
+        self.txt2= tkinter.Entry(width=50)
+        self.txt2.place(x=80, y=40)
         self.txt2.insert(tkinter.END,"コメント2")
 
-        self.txt3= tkinter.Entry(width=10)
-        self.txt3.place(x=10, y=70)
+        self.txt3= tkinter.Entry(width=50)
+        self.txt3.place(x=80, y=60)
         self.txt3.insert(tkinter.END,"コメント3")
 
         #self.txt4= tkinter.Entry(width=10)
@@ -72,7 +72,7 @@ class main_window(tk.Frame):
 
         button5= tk.Button(root, text=u'jpgファイル選択', command=self.button5_clicked)  
         button5.pack() 
-        button5.place(x=100, y=55) 
+        button5.place(x=100, y=90) 
 
         #button6= tk.Button(root, text=u'jpg読み出し', command=self.read_jpg)  
         #button6.pack() 
@@ -320,7 +320,7 @@ class main_window(tk.Frame):
 
         self.button6 = tk.Button(root, text = '1レコード消去', command=self.delete_one)
         self.button6.pack() 
-        self.button6.place(x=360, y=55)
+        self.button6.place(x=700, y=200)
 
         root.mainloop()
 
