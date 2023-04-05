@@ -21,10 +21,16 @@ import os
 from tkinter import filedialog as tkFileDialog
 import tkinter as tk
 
+wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
 
 class main_window(tk.Frame):
+
+
     def __init__(self, master):
         tk.Frame.__init__(self, master)
+
+        self.sizerate=1.0
+
         self.label = tk.Label(master,text="sqlite3 jpg test")
         self.label.pack()
         
@@ -74,9 +80,13 @@ class main_window(tk.Frame):
         button5.pack() 
         button5.place(x=100, y=90) 
 
-        #button6= tk.Button(root, text=u'jpg読み出し', command=self.read_jpg)  
-        #button6.pack() 
-        #button6.place(x=360, y=55) 
+        button9 = tk.Button(root, text = '拡大（↑）', command=self.sizeup)
+        button9.pack()  
+        button9.place(x=700, y=480) 
+
+        button10 = tk.Button(root, text = '縮小（↓）', command=self.sizedown)
+        button10.pack()  
+        button10.place(x=700, y=510) 
         
         
         
@@ -221,7 +231,6 @@ class main_window(tk.Frame):
         
      #self.id =self.txt4.get()
    
-     wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
   
   
      dbname = '../personbase3.db'
@@ -308,7 +317,7 @@ class main_window(tk.Frame):
         img2 = Image.open(n)
         x = 300
         y = 300
-        img2.thumbnail((x, y), Image.ANTIALIAS)
+        img2.thumbnail((x*float(self.sizerate), y*float(self.sizerate)), Image.ANTIALIAS)
 
         img2 = ImageTk.PhotoImage(img2)
 
@@ -377,7 +386,17 @@ class main_window(tk.Frame):
             value.set(n)
             self.id=n
             self.jpgread()
-    
+
+    def sizeup(self):
+        self.sizerate = float(self.sizerate) + 0.1
+        self.select_one_image(wf)
+
+
+    def sizedown(self):
+        self.sizerate = float(self.sizerate) - 0.1
+        self.select_one_image(wf)
+
+   
 #=================================================
 # main function
 #=================================================
