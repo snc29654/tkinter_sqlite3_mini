@@ -46,6 +46,14 @@ class main_window(tk.Frame):
         button12 = tk.Button(root, text = '検索', command=self.srch_db)
         button12.pack() 
         button12.place(x=390, y=18)
+
+        button13 = tk.Button(root, text = '検索', command=self.srch_db2)
+        button13.pack() 
+        button13.place(x=390, y=38)
+
+        button14 = tk.Button(root, text = '検索', command=self.srch_db3)
+        button14.pack() 
+        button14.place(x=390, y=58)
         
         button2 = tk.Button(root, text = 'DB書き込み', command=self.write_db)
         button2.pack() 
@@ -84,6 +92,14 @@ class main_window(tk.Frame):
         self.txt4= tkinter.Entry(width=10)
         self.txt4.place(x=450, y=20)
         self.txt4.insert(tkinter.END,"検索キー")
+
+        self.txt5= tkinter.Entry(width=10)
+        self.txt5.place(x=450, y=40)
+        self.txt5.insert(tkinter.END,"検索キー")
+
+        self.txt6= tkinter.Entry(width=10)
+        self.txt6.place(x=450, y=60)
+        self.txt6.insert(tkinter.END,"検索キー")
 
         button5= tk.Button(root, text=u'jpgファイル選択', command=self.button5_clicked)  
         button5.pack() 
@@ -304,6 +320,70 @@ class main_window(tk.Frame):
         for row in c.execute(select_sql):
             self.listbox.insert(tkinter.END, row[0])
 
+    def dbsrch2(self):
+     wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
+  
+  
+     dbname = '../personbase3.db'
+     #DBコネクト​
+     with closing(sqlite3.connect(dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            print("database already exist")
+        #表示​
+        self.textExample.delete("1.0",tkinter.END)
+
+
+        select_sql = 'select id ,data1 ,data2, data3, path  from users where data2 like '+'"%'+str(self.match_word2)+'%"'
+
+        self.listbox.delete(0, tkinter.END)
+        for row in c.execute(select_sql):
+            blob = row[0]
+            self.textExample.insert(tkinter.END,"\n")
+            self.textExample.insert(tkinter.END,row)
+
+
+        for row in c.execute(select_sql):
+            self.listbox.insert(tkinter.END, row[0])
+
+
+    def dbsrch3(self):
+     wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
+  
+  
+     dbname = '../personbase3.db'
+     #DBコネクト​
+     with closing(sqlite3.connect(dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            print("database already exist")
+        #表示​
+        self.textExample.delete("1.0",tkinter.END)
+
+
+        select_sql = 'select id ,data1 ,data2, data3, path  from users where data3 like '+'"%'+str(self.match_word3)+'%"'
+
+        self.listbox.delete(0, tkinter.END)
+        for row in c.execute(select_sql):
+            blob = row[0]
+            self.textExample.insert(tkinter.END,"\n")
+            self.textExample.insert(tkinter.END,row)
+
+
+        for row in c.execute(select_sql):
+            self.listbox.insert(tkinter.END, row[0])
+
+
 
     def jpgread(self):
         
@@ -375,6 +455,12 @@ class main_window(tk.Frame):
     def srch_db(self):
         self.match_word =self.txt4.get()
         self.dbsrch()
+    def srch_db2(self):
+        self.match_word2 =self.txt5.get()
+        self.dbsrch2()
+    def srch_db3(self):
+        self.match_word3 =self.txt6.get()
+        self.dbsrch3()
 
 
     def read_jpg(self):
