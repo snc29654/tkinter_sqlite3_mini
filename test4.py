@@ -20,6 +20,7 @@ from PIL import Image, ImageTk
 import os
 from tkinter import filedialog as tkFileDialog
 import tkinter as tk
+import glob
 
 wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
 
@@ -47,6 +48,11 @@ class main_window(tk.Frame):
         button2.pack() 
         button2.place(x=200, y=90)
 
+
+        #button11 = tk.Button(root, text = 'DB書き込み', command=self.write_db_folder)
+        #button11.pack() 
+        #button11.place(x=200, y=115)
+
         button3 = tk.Button(root, text = '表示クリア', command=self.text_clear)
         button3.pack() 
         button3.place(x=480, y=90)
@@ -56,9 +62,9 @@ class main_window(tk.Frame):
         button4.place(x=560, y=90)
 
 
-        self.textExample=ScrolledText(root, height=13,width=75, wrap=tkinter.CHAR)
+        self.textExample=ScrolledText(root, height=10,width=75, wrap=tkinter.CHAR)
         self.textExample.pack()
-        self.textExample.place(x=80, y=120)
+        self.textExample.place(x=80, y=150)
         
         self.txt1= tkinter.Entry(width=50)
         self.txt1.place(x=80, y=20)
@@ -79,6 +85,10 @@ class main_window(tk.Frame):
         button5= tk.Button(root, text=u'jpgファイル選択', command=self.button5_clicked)  
         button5.pack() 
         button5.place(x=100, y=90) 
+
+
+
+
 
         button9 = tk.Button(root, text = '拡大（↑）', command=self.sizeup)
         button9.pack()  
@@ -118,10 +128,39 @@ class main_window(tk.Frame):
         user = (self.data1, self.data2, self.data3, self.path, self.data_jpg)
         c.execute(sql, user)
         conn.commit()
+        conn.close()
 
 
         self.textExample.insert(tkinter.END,"\n")
         self.textExample.insert(tkinter.END,"DB書き込みしました")
+
+    def dbwrite_folder(self):
+     dbname = '../personbase3.db'
+     #DBコネクト​
+     with closing(sqlite3.connect(dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            pass
+        #データインサート​
+
+       
+        
+        
+        sql = 'insert into users (data1, data2, data3, path, data_jpg) values (?,?,?,?,?)'
+        user = (self.data1, self.data2, self.data3, self.path, self.data_jpg)
+        c.execute(sql, user)
+        conn.commit()
+
+        conn.close()
+        self.textExample.insert(tkinter.END,"\n")
+        self.textExample.insert(tkinter.END,"DB書き込みしました")
+
+
 
 
     def dbclear(self):
@@ -141,6 +180,7 @@ class main_window(tk.Frame):
         #user = (1, self.data1, self.data2, self.data3)
         c.execute(sql)
         conn.commit()
+        conn.close()
 
         self.textExample.insert(tkinter.END,"\n")
         self.textExample.insert(tkinter.END,"DB消去しました")
@@ -162,6 +202,7 @@ class main_window(tk.Frame):
         #user = (1, self.data1, self.data2, self.data3)
         c.execute(sql)
         conn.commit()
+        conn.close()
 
         self.textExample.insert(tkinter.END,"\n")
         self.textExample.insert(tkinter.END,"1レコード消去しました")
@@ -190,6 +231,7 @@ class main_window(tk.Frame):
         sql = 'update users set data3 = '+ '"'+str(self.data3)+'"'+ ' where id ='+' "'+str(self.id)+'";'
         c.execute(sql)
         conn.commit()
+        conn.close()
 
         self.textExample.insert(tkinter.END,"\n")
         self.textExample.insert(tkinter.END,"更新しました")
@@ -275,20 +317,20 @@ class main_window(tk.Frame):
             self.textExample.insert(tkinter.END,"jpgが未指定\n")
             return
 
+        self.data1 =self.txt1.get()
+        self.data2 =self.txt2.get()
+        self.data3 =self.txt3.get()
         for file in self.filenames:
             file_c = file.replace('\\', '\\\\');
             print(file_c)
 
-        self.path=file_c
+            self.path=file_c
 
         
-        self.data1 =self.txt1.get()
-        self.data2 =self.txt2.get()
-        self.data3 =self.txt3.get()
-        with open(file_c, 'rb') as f:
-            self.data_jpg = f.read()
+            with open(file_c, 'rb') as f:
+                self.data_jpg = f.read()
 
-        self.dbwrite()
+            self.dbwrite()
  
             
     def read_db(self):
@@ -352,6 +394,15 @@ class main_window(tk.Frame):
 
         root.mainloop()
 
+    def button10_clicked(self):  
+        ini_dir = 'C:'
+        ret = tkinter.filedialog.askdirectory(initialdir=ini_dir, title='file dialog test', mustexist = True)
+        print(str(ret))
+        os.chdir(str(ret))
+        #filenames = []
+        self.dir = 1
+        self.filenames = glob.glob('*.jpg')
+        print(self.filenames)
 
     def button5_clicked(self):  
         global filenames
