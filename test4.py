@@ -43,6 +43,9 @@ class main_window(tk.Frame):
         button7.pack() 
         button7.place(x=360, y=90)
 
+        button12 = tk.Button(root, text = '検索', command=self.srch_db)
+        button12.pack() 
+        button12.place(x=390, y=18)
         
         button2 = tk.Button(root, text = 'DB書き込み', command=self.write_db)
         button2.pack() 
@@ -78,9 +81,9 @@ class main_window(tk.Frame):
         self.txt3.place(x=80, y=60)
         self.txt3.insert(tkinter.END,"コメント3")
 
-        #self.txt4= tkinter.Entry(width=10)
-        #self.txt4.place(x=10, y=90)
-        #self.txt4.insert(tkinter.END,"id")
+        self.txt4= tkinter.Entry(width=10)
+        self.txt4.place(x=450, y=20)
+        self.txt4.insert(tkinter.END,"検索キー")
 
         button5= tk.Button(root, text=u'jpgファイル選択', command=self.button5_clicked)  
         button5.pack() 
@@ -269,6 +272,39 @@ class main_window(tk.Frame):
         for row in c.execute('select id ,data1 ,data2, data3, path from users'):
             self.listbox.insert(tkinter.END, row[0])
 
+
+    def dbsrch(self):
+     wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
+  
+  
+     dbname = '../personbase3.db'
+     #DBコネクト​
+     with closing(sqlite3.connect(dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            print("database already exist")
+        #表示​
+        self.textExample.delete("1.0",tkinter.END)
+
+
+        select_sql = 'select id ,data1 ,data2, data3, path  from users where data1 like '+'"%'+str(self.match_word)+'%"'
+
+        self.listbox.delete(0, tkinter.END)
+        for row in c.execute(select_sql):
+            blob = row[0]
+            self.textExample.insert(tkinter.END,"\n")
+            self.textExample.insert(tkinter.END,row)
+
+
+        for row in c.execute(select_sql):
+            self.listbox.insert(tkinter.END, row[0])
+
+
     def jpgread(self):
         
      #self.id =self.txt4.get()
@@ -335,6 +371,11 @@ class main_window(tk.Frame):
             
     def read_db(self):
         self.dbread()
+
+    def srch_db(self):
+        self.match_word =self.txt4.get()
+        self.dbsrch()
+
 
     def read_jpg(self):
         self.jpgread()
