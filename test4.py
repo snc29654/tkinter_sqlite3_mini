@@ -139,23 +139,13 @@ class main_window(tk.Frame):
         self.listbox.bind("<<ListboxSelect>>", self.get_index)
 
     def dbwrite(self):
-     self.dbname = '../'+self.txt7.get()
-     #DBコネクト​
-     with closing(sqlite3.connect(self.dbname)) as conn:
-        c = conn.cursor()
-        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
-                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
-        #テーブルクリエイト​
-        try:
-            c.execute(create_table)
-        except:
-            pass
+        self.dbname = '../'+self.txt7.get()
+        #DBコネクト​
         #データインサート​
         sql = 'insert into users (data1, data2, data3, path, data_jpg) values (?,?,?,?,?)'
         user = (self.data1, self.data2, self.data3, self.path, self.data_jpg)
-        c.execute(sql, user)
-        conn.commit()
-        conn.close()
+        self.c.execute(sql, user)
+        self.conn.commit()
 
 
 
@@ -423,6 +413,19 @@ class main_window(tk.Frame):
         
     def dbwrite_thread(self):
         
+     self.dbname = '../'+self.txt7.get()
+     #DBコネクト​
+     with closing(sqlite3.connect(self.dbname)) as self.conn:
+        self.c = self.conn.cursor()
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
+        #テーブルクリエイト​
+        try:
+            self.c.execute(create_table)
+        except:
+            pass
+        
+        
         for file in self.filenames:
             file_c = file.replace('\\', '\\\\');
 
@@ -438,7 +441,8 @@ class main_window(tk.Frame):
 
             self.dbwrite()
  
-            
+        self.conn.close()
+    
     def read_db(self):
         thread2 = threading.Thread(target=self.dbread)
         thread2.start()
