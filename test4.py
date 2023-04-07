@@ -93,6 +93,11 @@ class main_window(tk.Frame):
         self.txt4.place(x=450, y=20)
         self.txt4.insert(tkinter.END,"検索キー")
 
+        self.txt7= tkinter.Entry(width=20)
+        self.txt7.place(x=530, y=20)
+        self.txt7.insert(tkinter.END,"original.db")
+
+
         self.txt5= tkinter.Entry(width=10)
         self.txt5.place(x=450, y=40)
         self.txt5.insert(tkinter.END,"検索キー")
@@ -116,7 +121,8 @@ class main_window(tk.Frame):
         button10 = tk.Button(root, text = '縮小（↓）', command=self.sizedown)
         button10.pack()  
         button10.place(x=700, y=510) 
-        
+        self.txt7.get()
+        self.dbname = '../'+self.txt7.get()
         
         
         self.dir = 0
@@ -131,9 +137,9 @@ class main_window(tk.Frame):
         self.listbox.bind("<<ListboxSelect>>", self.get_index)
 
     def dbwrite(self):
-     dbname = '../personbase3.db'
+     self.dbname = '../'+self.txt7.get()
      #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
+     with closing(sqlite3.connect(self.dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
@@ -154,9 +160,9 @@ class main_window(tk.Frame):
         self.textExample.insert(tkinter.END,"DB書き込みしました")
 
     def dbwrite_folder(self):
-     dbname = '../personbase3.db'
+     self.dbname = '../'+self.txt7.get()
      #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
+     with closing(sqlite3.connect(self.dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
@@ -183,9 +189,9 @@ class main_window(tk.Frame):
 
 
     def dbclear(self):
-     dbname = '../personbase3.db'
+     self.dbname = '../'+self.txt7.get()
      #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
+     with closing(sqlite3.connect(self.dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
@@ -205,9 +211,9 @@ class main_window(tk.Frame):
         self.textExample.insert(tkinter.END,"DB消去しました")
 
     def delete_one(self):
-     dbname = '../personbase3.db'
+     self.dbname = '../'+self.txt7.get()
      #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
+     with closing(sqlite3.connect(self.dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
@@ -229,9 +235,9 @@ class main_window(tk.Frame):
 
 
     def dbupdate(self):
-     dbname = '../personbase3.db'
+     self.dbname = '../'+self.txt7.get()
      #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
+     with closing(sqlite3.connect(self.dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
@@ -259,12 +265,12 @@ class main_window(tk.Frame):
 
             
     def dbread(self):
+     self.dbname = '../'+self.txt7.get()
      wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
   
   
-     dbname = '../personbase3.db'
      #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
+     with closing(sqlite3.connect(self.dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
@@ -290,12 +296,12 @@ class main_window(tk.Frame):
 
 
     def dbsrch(self):
+     self.dbname = '../'+self.txt7.get()
      wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
   
   
-     dbname = '../personbase3.db'
      #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
+     with closing(sqlite3.connect(self.dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
@@ -321,12 +327,12 @@ class main_window(tk.Frame):
             self.listbox.insert(tkinter.END, row[0])
 
     def dbsrch2(self):
+     self.dbname = '../'+self.txt7.get()
      wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
   
   
-     dbname = '../personbase3.db'
      #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
+     with closing(sqlite3.connect(self.dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
@@ -353,12 +359,12 @@ class main_window(tk.Frame):
 
 
     def dbsrch3(self):
+     self.dbname = '../'+self.txt7.get()
      wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
   
   
-     dbname = '../personbase3.db'
      #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
+     with closing(sqlite3.connect(self.dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
@@ -386,14 +392,14 @@ class main_window(tk.Frame):
 
 
     def jpgread(self):
+     self.dbname = '../'+self.txt7.get()
         
      #self.id =self.txt4.get()
    
   
   
-     dbname = '../personbase3.db'
      #DBコネクト​
-     with closing(sqlite3.connect(dbname)) as conn:
+     with closing(sqlite3.connect(self.dbname)) as conn:
         c = conn.cursor()
         create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
                       data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
@@ -427,6 +433,7 @@ class main_window(tk.Frame):
 
 
     def write_db(self):
+        self.dbname = '../'+self.txt7.get()
         global filenames
 
         if(self.dir==0):
