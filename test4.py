@@ -21,6 +21,8 @@ import os
 from tkinter import filedialog as tkFileDialog
 import tkinter as tk
 import glob
+import threading
+
 
 wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
 
@@ -155,35 +157,6 @@ class main_window(tk.Frame):
         conn.commit()
         conn.close()
 
-
-        self.textExample.insert(tkinter.END,"\n")
-        self.textExample.insert(tkinter.END,"DB書き込みしました")
-
-    def dbwrite_folder(self):
-     self.dbname = '../'+self.txt7.get()
-     #DBコネクト​
-     with closing(sqlite3.connect(self.dbname)) as conn:
-        c = conn.cursor()
-        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
-                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
-        #テーブルクリエイト​
-        try:
-            c.execute(create_table)
-        except:
-            pass
-        #データインサート​
-
-       
-        
-        
-        sql = 'insert into users (data1, data2, data3, path, data_jpg) values (?,?,?,?,?)'
-        user = (self.data1, self.data2, self.data3, self.path, self.data_jpg)
-        c.execute(sql, user)
-        conn.commit()
-
-        conn.close()
-        self.textExample.insert(tkinter.END,"\n")
-        self.textExample.insert(tkinter.END,"DB書き込みしました")
 
 
 
@@ -443,12 +416,23 @@ class main_window(tk.Frame):
         self.data1 =self.txt1.get()
         self.data2 =self.txt2.get()
         self.data3 =self.txt3.get()
+        
+        thread1 = threading.Thread(target=self.dbwrite_thread)
+        thread1.start()
+
+        
+    def dbwrite_thread(self):
+        
         for file in self.filenames:
             file_c = file.replace('\\', '\\\\');
             print(file_c)
 
             self.path=file_c
 
+
+            self.textExample.insert(tkinter.END,"\n")
+            self.textExample.insert(tkinter.END,file_c)
+            self.textExample.yview_moveto(1)
         
             with open(file_c, 'rb') as f:
                 self.data_jpg = f.read()
