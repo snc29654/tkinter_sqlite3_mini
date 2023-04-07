@@ -252,6 +252,7 @@ class main_window(tk.Frame):
             blob = row[0]
             self.textExample.insert(tkinter.END,"\n")
             self.textExample.insert(tkinter.END,row)
+            self.textExample.yview_moveto(1)
 
 
         for row in c.execute('select id ,data1 ,data2, data3, path from users'):
