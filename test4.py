@@ -573,5 +573,5 @@ class main_window(tk.Frame):
 if __name__  == '__main__':
     root = tk.Tk()
     mw = main_window(root)
-    root.geometry("800x650")  
+    root.geometry("800x800")  
     root.mainloop();
