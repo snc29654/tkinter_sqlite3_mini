@@ -440,7 +440,9 @@ class main_window(tk.Frame):
  
             
     def read_db(self):
-        self.dbread()
+        thread2 = threading.Thread(target=self.dbread)
+        thread2.start()
+
 
     def srch_db(self):
         self.match_word =self.txt4.get()
