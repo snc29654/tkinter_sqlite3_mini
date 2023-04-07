@@ -149,7 +149,7 @@ class main_window(tk.Frame):
         try:
             c.execute(create_table)
         except:
-            print("database already exist")
+            pass
         #データインサート​
         sql = 'insert into users (data1, data2, data3, path, data_jpg) values (?,?,?,?,?)'
         user = (self.data1, self.data2, self.data3, self.path, self.data_jpg)
@@ -425,7 +425,6 @@ class main_window(tk.Frame):
         
         for file in self.filenames:
             file_c = file.replace('\\', '\\\\');
-            print(file_c)
 
             self.path=file_c
 
