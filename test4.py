@@ -22,6 +22,7 @@ from tkinter import filedialog as tkFileDialog
 import tkinter as tk
 import glob
 import threading
+import time
 
 
 wf = 'C:\\jpg\\write.jpg' #書き込み画像ファイルパス
@@ -113,6 +114,9 @@ class main_window(tk.Frame):
         button5.place(x=100, y=90) 
 
 
+        button15= tk.Button(root, text=u'jpgプレビュー', command=self.button15_clicked)  
+        button15.pack() 
+        button15.place(x=100, y=120) 
 
 
 
@@ -517,7 +521,18 @@ class main_window(tk.Frame):
 
 
         root.mainloop()
-
+    def change_image(self):
+        for n in filenames:
+            img2 = Image.open(n)
+            x = 300
+            y = 300
+            img2.thumbnail((x, y), Image.ANTIALIAS)
+            img2 = ImageTk.PhotoImage(img2)
+            canvas = tkinter.Canvas(width=600, height=500)
+            canvas.place(x=100, y=300)
+            item = canvas.create_image(30, 30, image=img2, anchor=tkinter.NW)
+            canvas.itemconfig(item,image=img2)
+            time.sleep(0.1) 
     def button10_clicked(self):  
         ini_dir = 'C:'
         ret = tkinter.filedialog.askdirectory(initialdir=ini_dir, title='file dialog test', mustexist = True)
@@ -527,6 +542,15 @@ class main_window(tk.Frame):
         self.dir = 1
         self.filenames = glob.glob('*.jpg')
         print(self.filenames)
+
+    def button15_clicked(self):  
+        if(self.dir==0):
+            self.textExample.insert(tkinter.END,"jpgが未指定\n")
+            return
+
+        thread1 = threading.Thread(target=self.change_image)
+        thread1.start()
+
 
     def button5_clicked(self):  
         global filenames
