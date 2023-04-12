@@ -34,7 +34,7 @@ class main_window(tk.Frame):
         tk.Frame.__init__(self, master)
 
         self.sizerate=1.0
-
+        self.sizevalid=0
         self.label = tk.Label(master,text="sqlite3 jpg test")
         self.label.pack()
         
@@ -364,7 +364,8 @@ class main_window(tk.Frame):
         
      #self.id =self.txt4.get()
    
-  
+     self.sizevalid=1
+
   
      #DBコネクト​
      with closing(sqlite3.connect(self.dbname)) as conn:
@@ -505,6 +506,7 @@ class main_window(tk.Frame):
 
 
     def prev_image(self,n):
+        self.sizevalid=0
     
         img2 = Image.open(n)
         x = 300
@@ -521,7 +523,11 @@ class main_window(tk.Frame):
 
 
         root.mainloop()
+        
     def change_image(self):
+
+        self.sizevalid=0
+
         for n in filenames:
             img2 = Image.open(n)
             x = 300
@@ -587,13 +593,15 @@ class main_window(tk.Frame):
             self.jpgread()
 
     def sizeup(self):
-        self.sizerate = float(self.sizerate) + 0.1
-        self.select_one_image(wf)
+        if(self.sizevalid==1):
+            self.sizerate = float(self.sizerate) + 0.1
+            self.select_one_image(wf)
 
 
     def sizedown(self):
-        self.sizerate = float(self.sizerate) - 0.1
-        self.select_one_image(wf)
+        if(self.sizevalid==1):
+            self.sizerate = float(self.sizerate) - 0.1
+            self.select_one_image(wf)
 
    
 #=================================================
