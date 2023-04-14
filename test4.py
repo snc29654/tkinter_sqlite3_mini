@@ -385,6 +385,7 @@ class main_window(tk.Frame):
             data1 = row[1]
             data2 = row[2]
             data3 = row[3]
+            path = row[4]
             blob =  row[5]
         self.txt1.delete(0, tk.END)         
         self.txt1.insert(tkinter.END,data1)
@@ -392,6 +393,13 @@ class main_window(tk.Frame):
         self.txt2.insert(tkinter.END,data2)
         self.txt3.delete(0, tk.END)         
         self.txt3.insert(tkinter.END,data3)
+
+        self.textExample.insert(tkinter.END,"\n")
+        self.textExample.insert(tkinter.END,self.id)
+        self.textExample.insert(tkinter.END," : ")
+        self.textExample.insert(tkinter.END,path)
+        self.textExample.yview_moveto(1)
+
 
         with open(wf, 'wb') as f:
             f.write(blob)
