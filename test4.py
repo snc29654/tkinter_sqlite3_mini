@@ -199,6 +199,7 @@ class main_window(tk.Frame):
         self.textExample.insert(tkinter.END,"\n")
         self.textExample.insert(tkinter.END,"1レコード消去しました")
         self.button6.destroy()
+        self.dbread()
 
 
     def dbupdate(self):
