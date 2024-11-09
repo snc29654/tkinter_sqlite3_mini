@@ -451,7 +451,7 @@ class main_window(tk.Frame):
         except:
             pass
         
-        
+        self.c.execute('''BEGIN TRANSACTION''');
         for file in self.filenames:
             file_c = file.replace('\\', '\\\\');
 
@@ -466,7 +466,7 @@ class main_window(tk.Frame):
                 self.data_jpg = f.read()
 
             self.dbwrite()
- 
+        self.c.execute('''COMMIT TRANSACTION''');
         self.conn.close()
     
     def read_db(self):
