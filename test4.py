@@ -35,26 +35,37 @@ class main_window(tk.Frame):
 
         self.sizerate=1.0
         self.sizevalid=0
-        self.label = tk.Label(master,text="sqlite3 jpg test")
+        self.label = tk.Label(master,text="jpg画像をsqlite3 DBへ格納と読み出し")
         self.label.pack()
+    
+        lab1 = tk.Label( text = u'コメント1' )
+        lab1.place( x = 30, y = 20 )
+        lab2 = tk.Label( text = u'コメント2' )
+        lab2.place( x = 30, y = 40 )
+        lab3 = tk.Label( text = u'コメント3' )
+        lab3.place( x = 30, y = 60 )
+        
+        lab4 = tk.Label( text = u'実行状況' )
+        lab4.place( x = 25, y = 150 )
+
         
         button1 = tk.Button(root, text = 'DB読み出し', command=self.read_db)
         button1.pack() 
         button1.place(x=280, y=90)
 
-        button7 = tk.Button(root, text = 'DB更新', command=self.update_db)
+        button7 = tk.Button(root, text = 'DBコメント更新', command=self.update_db)
         button7.pack() 
         button7.place(x=360, y=90)
 
-        button12 = tk.Button(root, text = '検索', command=self.srch_db)
+        button12 = tk.Button(root, text = 'コメント検索', command=self.srch_db)
         button12.pack() 
         button12.place(x=390, y=18)
 
-        button13 = tk.Button(root, text = '検索', command=self.srch_db2)
+        button13 = tk.Button(root, text = 'コメント検索', command=self.srch_db2)
         button13.pack() 
         button13.place(x=390, y=38)
 
-        button14 = tk.Button(root, text = '検索', command=self.srch_db3)
+        button14 = tk.Button(root, text = 'コメント検索', command=self.srch_db3)
         button14.pack() 
         button14.place(x=390, y=58)
         
@@ -93,7 +104,7 @@ class main_window(tk.Frame):
         self.txt3.insert(tkinter.END,"コメント3")
 
         self.txt4= tkinter.Entry(width=10)
-        self.txt4.place(x=450, y=20)
+        self.txt4.place(x=460, y=20)
         self.txt4.insert(tkinter.END,"検索キー")
 
         self.txt7= tkinter.Entry(width=20)
@@ -102,11 +113,11 @@ class main_window(tk.Frame):
 
 
         self.txt5= tkinter.Entry(width=10)
-        self.txt5.place(x=450, y=40)
+        self.txt5.place(x=460, y=40)
         self.txt5.insert(tkinter.END,"検索キー")
 
         self.txt6= tkinter.Entry(width=10)
-        self.txt6.place(x=450, y=60)
+        self.txt6.place(x=460, y=60)
         self.txt6.insert(tkinter.END,"検索キー")
 
         button5= tk.Button(root, text=u'jpgファイル選択', command=self.button5_clicked)  
@@ -114,7 +125,7 @@ class main_window(tk.Frame):
         button5.place(x=100, y=90) 
 
 
-        button15= tk.Button(root, text=u'jpgプレビュー', command=self.button15_clicked)  
+        button15= tk.Button(root, text=u'jpgファイル選択後プレビュー', command=self.button15_clicked)  
         button15.pack() 
         button15.place(x=100, y=120) 
 
