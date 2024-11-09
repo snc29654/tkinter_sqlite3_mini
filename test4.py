@@ -450,14 +450,18 @@ class main_window(tk.Frame):
             self.c.execute(create_table)
         except:
             pass
-        
+        count=0
         for file in self.filenames:
             file_c = file.replace('\\', '\\\\');
 
             self.path=file_c
-
+            count=count+1
 
             self.textExample.insert(tkinter.END,"\n")
+            self.textExample.insert(tkinter.END,count)
+            self.textExample.insert(tkinter.END," / ")
+            self.textExample.insert(tkinter.END,self.count)
+            self.textExample.insert(tkinter.END,"  ")
             self.textExample.insert(tkinter.END,file_c)
             self.textExample.yview_moveto(1)
         
@@ -584,7 +588,11 @@ class main_window(tk.Frame):
         iDir = os.path.abspath(os.path.dirname(__file__)) 
         filenames = tkFileDialog.askopenfilenames(filetypes= [("Image file", ".bmp .png .jpg .tif"), ("Bitmap", ".bmp"), ("PNG", ".png"), ("JPEG", ".jpg"), ("Tiff", ".tif") ], initialdir=iDir)
         print(filenames)
+        
         self.filenames=filenames
+        self.count=len(self.filenames)
+        print(self.count)
+
         self.dir = 1
 
 
