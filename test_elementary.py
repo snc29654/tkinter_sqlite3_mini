@@ -129,6 +129,10 @@ class main_window(tk.Frame):
         button15.pack() 
         button15.place(x=100, y=120) 
 
+        button16= tk.Button(root, text=u'DB選択後プレビュー', command=self.read_db_disp)  
+        button16.pack() 
+        button16.place(x=300, y=120) 
+
 
 
         button9 = tk.Button(root, text = '拡大（↑）', command=self.sizeup)
@@ -419,6 +423,55 @@ class main_window(tk.Frame):
         self.select_one_image(wf)
 
 
+    def jpgread_from_db(self):
+     self.dbname = '../'+self.txt7.get()
+        
+     #self.id =self.txt4.get()
+   
+     self.sizevalid=1
+
+  
+     #DBコネクト​
+     with closing(sqlite3.connect(self.dbname)) as conn:
+        c = conn.cursor()
+        create_table = '''create table users (id integer primary key autoincrement, data1 varchar(64),
+                      data2 varchar(64), data3 varchar(64),path varchar(64),data_jpg img)'''
+        #テーブルクリエイト​
+        try:
+            c.execute(create_table)
+        except:
+            print("database already exist")
+        #表示​
+        #self.textExample.delete("1.0",tkinter.END)
+
+
+        for row in c.execute('select * from users '):
+            data1 = row[1]
+            data2 = row[2]
+            data3 = row[3]
+            path = row[4]
+            blob =  row[5]
+        self.txt1.delete(0, tk.END)         
+        self.txt1.insert(tkinter.END,data1)
+        self.txt2.delete(0, tk.END)         
+        self.txt2.insert(tkinter.END,data2)
+        self.txt3.delete(0, tk.END)         
+        self.txt3.insert(tkinter.END,data3)
+
+        self.textExample.insert(tkinter.END,"\n")
+        #self.textExample.insert(tkinter.END,self.id)
+        self.textExample.insert(tkinter.END," : ")
+        self.textExample.insert(tkinter.END,path)
+        self.textExample.yview_moveto(1)
+
+
+        with open(wf, 'wb') as f:
+            f.write(blob)
+
+        self.select_one_image(wf)
+
+
+
 
 
     def write_db(self):
@@ -475,6 +528,10 @@ class main_window(tk.Frame):
     def read_db(self):
         thread2 = threading.Thread(target=self.dbread)
         thread2.start()
+
+    def read_db_disp(self):
+        thread3 = threading.Thread(target=self.jpgread_from_db)
+        thread3.start()
 
 
     def srch_db(self):
