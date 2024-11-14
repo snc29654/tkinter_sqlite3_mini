@@ -511,7 +511,7 @@ class main_window(tk.Frame):
         img2 = Image.open(n)
         x = 300
         y = 300
-        img2.thumbnail((x*float(self.sizerate), y*float(self.sizerate)), Image.ANTIALIAS)
+        #img2.thumbnail((x*float(self.sizerate), y*float(self.sizerate)), Image.ANTIALIAS)
 
         img2 = ImageTk.PhotoImage(img2)
 
