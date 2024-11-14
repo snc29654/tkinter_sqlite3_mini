@@ -451,24 +451,24 @@ class main_window(tk.Frame):
             data3 = row[3]
             path = row[4]
             blob =  row[5]
-        self.txt1.delete(0, tk.END)         
-        self.txt1.insert(tkinter.END,data1)
-        self.txt2.delete(0, tk.END)         
-        self.txt2.insert(tkinter.END,data2)
-        self.txt3.delete(0, tk.END)         
-        self.txt3.insert(tkinter.END,data3)
+            self.txt1.delete(0, tk.END)         
+            self.txt1.insert(tkinter.END,data1)
+            self.txt2.delete(0, tk.END)         
+            self.txt2.insert(tkinter.END,data2)
+            self.txt3.delete(0, tk.END)         
+            self.txt3.insert(tkinter.END,data3)
 
-        self.textExample.insert(tkinter.END,"\n")
-        #self.textExample.insert(tkinter.END,self.id)
-        self.textExample.insert(tkinter.END," : ")
-        self.textExample.insert(tkinter.END,path)
-        self.textExample.yview_moveto(1)
+            self.textExample.insert(tkinter.END,"\n")
+            #self.textExample.insert(tkinter.END,self.id)
+            self.textExample.insert(tkinter.END," : ")
+            self.textExample.insert(tkinter.END,path)
+            self.textExample.yview_moveto(1)
 
 
-        with open(wf, 'wb') as f:
-            f.write(blob)
+            with open(wf, 'wb') as f:
+                f.write(blob)
 
-        self.select_one_image(wf)
+            self.select_one_image_from_db(wf)
 
 
 
@@ -583,6 +583,30 @@ class main_window(tk.Frame):
         self.button6.place(x=700, y=200)
 
         root.mainloop()
+
+
+    def select_one_image_from_db(self,n):
+    
+        img2 = Image.open(n)
+        x = 300
+        y = 300
+        #img2.thumbnail((x*float(self.sizerate), y*float(self.sizerate)), Image.ANTIALIAS)
+
+        img2 = ImageTk.PhotoImage(img2)
+
+        canvas = tkinter.Canvas(width=600, height=500)
+        canvas.pack()
+        canvas.place(x=100, y=300)
+        item = canvas.create_image(30, 30, image=img2, anchor=tkinter.NW)
+        canvas.itemconfig(item,image=img2)
+
+        self.button6 = tk.Button(root, text = '1レコード消去', command=self.delete_one)
+        self.button6.pack() 
+        self.button6.place(x=700, y=200)
+
+        time.sleep(0.2) 
+
+
 
 
     def prev_image(self,n):
