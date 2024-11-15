@@ -49,7 +49,7 @@ class main_window(tk.Frame):
         lab4.place( x = 25, y = 150 )
 
         
-        button1 = tk.Button(root, text = 'DB読み出し', command=self.read_db)
+        button1 = tk.Button(root, text = 'DBリスト生成', command=self.read_db)
         button1.pack() 
         button1.place(x=280, y=90)
 
@@ -129,7 +129,7 @@ class main_window(tk.Frame):
         button15.pack() 
         button15.place(x=100, y=120) 
 
-        button16= tk.Button(root, text=u'DB選択後プレビュー', command=self.read_db_disp)  
+        button16= tk.Button(root, text=u'DB画像スライドショー', command=self.read_db_disp)  
         button16.pack() 
         button16.place(x=300, y=120) 
 
@@ -305,6 +305,13 @@ class main_window(tk.Frame):
             blob = row[0]
             self.textExample.insert(tkinter.END,"\n")
             self.textExample.insert(tkinter.END,row)
+            self.txt1.delete(0,tkinter.END)
+            self.txt2.delete(0,tkinter.END)
+            self.txt3.delete(0,tkinter.END)
+
+            self.txt1.insert(tkinter.END,row[1])
+            self.txt2.insert(tkinter.END,row[2])
+            self.txt3.insert(tkinter.END,row[3])
 
 
         for row in c.execute(select_sql):
@@ -336,6 +343,13 @@ class main_window(tk.Frame):
             blob = row[0]
             self.textExample.insert(tkinter.END,"\n")
             self.textExample.insert(tkinter.END,row)
+            self.txt1.delete(0,tkinter.END)
+            self.txt2.delete(0,tkinter.END)
+            self.txt3.delete(0,tkinter.END)
+
+            self.txt1.insert(tkinter.END,row[1])
+            self.txt2.insert(tkinter.END,row[2])
+            self.txt3.insert(tkinter.END,row[3])
 
 
         for row in c.execute(select_sql):
@@ -368,6 +382,13 @@ class main_window(tk.Frame):
             blob = row[0]
             self.textExample.insert(tkinter.END,"\n")
             self.textExample.insert(tkinter.END,row)
+            self.txt1.delete(0,tkinter.END)
+            self.txt2.delete(0,tkinter.END)
+            self.txt3.delete(0,tkinter.END)
+            
+            self.txt1.insert(tkinter.END,row[1])
+            self.txt2.insert(tkinter.END,row[2])
+            self.txt3.insert(tkinter.END,row[3])
 
 
         for row in c.execute(select_sql):
@@ -375,7 +396,7 @@ class main_window(tk.Frame):
 
 
 
-    def jpgread(self):
+    def jpgread_one(self):
      self.dbname = '../'+self.txt7.get()
         
      #self.id =self.txt4.get()
@@ -546,7 +567,7 @@ class main_window(tk.Frame):
 
 
     def read_jpg(self):
-        self.jpgread()
+        self.jpgread_one()
 
 
 
@@ -568,7 +589,7 @@ class main_window(tk.Frame):
         img2 = Image.open(n)
         x = 300
         y = 300
-        #img2.thumbnail((x*float(self.sizerate), y*float(self.sizerate)), Image.ANTIALIAS)
+        img2.thumbnail((x*float(self.sizerate), y*float(self.sizerate)), Image.ANTIALIAS)
 
         img2 = ImageTk.PhotoImage(img2)
 
@@ -590,7 +611,7 @@ class main_window(tk.Frame):
         img2 = Image.open(n)
         x = 300
         y = 300
-        #img2.thumbnail((x*float(self.sizerate), y*float(self.sizerate)), Image.ANTIALIAS)
+        img2.thumbnail((x*float(self.sizerate), y*float(self.sizerate)), Image.ANTIALIAS)
 
         img2 = ImageTk.PhotoImage(img2)
 
@@ -698,7 +719,7 @@ class main_window(tk.Frame):
             n = event.widget.get(index)
             value.set(n)
             self.id=n
-            self.jpgread()
+            self.jpgread_one()
 
     def sizeup(self):
         if(self.sizevalid==1):
