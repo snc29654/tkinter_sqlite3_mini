@@ -602,6 +602,9 @@ class main_window(tk.Frame):
         self.button6 = tk.Button(root, text = '1レコード消去', command=self.delete_one)
         self.button6.pack() 
         self.button6.place(x=700, y=200)
+        self.button20 = tk.Button(root, text = 'アプリ画像表示', command=self.show_image)
+        self.button20.pack() 
+        self.button20.place(x=700, y=300)
 
         root.mainloop()
 
@@ -628,8 +631,13 @@ class main_window(tk.Frame):
         time.sleep(0.2) 
 
 
+    def show_image(self):
 
-
+        img=Image.open(wf)
+        img.show()
+        root.mainloop()
+        
+        
     def prev_image(self,n):
         self.sizevalid=0
     
