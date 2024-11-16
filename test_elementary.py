@@ -467,6 +467,7 @@ class main_window(tk.Frame):
 
 
         for row in c.execute('select * from users '):
+            id=row[0]
             data1 = row[1]
             data2 = row[2]
             data3 = row[3]
@@ -480,7 +481,7 @@ class main_window(tk.Frame):
             self.txt3.insert(tkinter.END,data3)
 
             self.textExample.insert(tkinter.END,"\n")
-            #self.textExample.insert(tkinter.END,self.id)
+            self.textExample.insert(tkinter.END,id)
             self.textExample.insert(tkinter.END," : ")
             self.textExample.insert(tkinter.END,path)
             self.textExample.yview_moveto(1)
@@ -602,7 +603,7 @@ class main_window(tk.Frame):
         self.button6 = tk.Button(root, text = '1レコード消去', command=self.delete_one)
         self.button6.pack() 
         self.button6.place(x=700, y=200)
-        self.button20 = tk.Button(root, text = 'アプリ画像表示', command=self.show_image)
+        self.button20 = tk.Button(root, text = 'アプリ画像表示', command=self.show_image_thread)
         self.button20.pack() 
         self.button20.place(x=700, y=300)
 
@@ -630,12 +631,14 @@ class main_window(tk.Frame):
 
         time.sleep(0.2) 
 
+    def show_image_thread(self):
+        thread4 = threading.Thread(target=self.show_image)
+        thread4.start()
 
     def show_image(self):
 
         img=Image.open(wf)
         img.show()
-        root.mainloop()
         
         
     def prev_image(self,n):
