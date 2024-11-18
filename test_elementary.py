@@ -133,6 +133,13 @@ class main_window(tk.Frame):
         button16.pack() 
         button16.place(x=300, y=120) 
 
+        button30= tk.Button(root, text=u'速く', command=self.speed_up)  
+        button30.pack() 
+        button30.place(x=440, y=120) 
+
+        button31= tk.Button(root, text=u'遅く', command=self.speed_down)  
+        button31.pack() 
+        button31.place(x=480, y=120) 
 
 
         button9 = tk.Button(root, text = '拡大（↑）', command=self.sizeup)
@@ -156,6 +163,18 @@ class main_window(tk.Frame):
         scrollbar.pack(side=tkinter.RIGHT, fill="y")
         self.listbox.pack(side = tk.TOP)
         self.listbox.bind("<<ListboxSelect>>", self.get_index)
+
+        self.speed=0.2
+
+    def speed_up(self):
+        if(self.speed > 0.2):
+            self.speed=self.speed-0.1
+        else:
+            pass
+
+
+    def speed_down(self):
+        self.speed=self.speed+0.1
 
     def dbwrite(self):
         self.dbname = '../'+self.txt7.get()
@@ -629,7 +648,7 @@ class main_window(tk.Frame):
         self.button6.pack() 
         self.button6.place(x=700, y=200)
 
-        time.sleep(0.2) 
+        time.sleep(self.speed) 
 
     def show_image_thread(self):
         thread4 = threading.Thread(target=self.show_image)
@@ -642,12 +661,12 @@ class main_window(tk.Frame):
         
         
     def prev_image(self,n):
-        self.sizevalid=0
-    
+        self.sizevalid=1
+
         img2 = Image.open(n)
         x = 300
         y = 300
-        img2.thumbnail((x, y), Image.ANTIALIAS)
+        img2.thumbnail((x*float(self.sizerate), y*float(self.sizerate)), Image.ANTIALIAS)
 
         img2 = ImageTk.PhotoImage(img2)
 
@@ -661,20 +680,21 @@ class main_window(tk.Frame):
         root.mainloop()
         
     def change_image(self):
-
-        self.sizevalid=0
+        self.sizevalid=1
 
         for n in filenames:
             img2 = Image.open(n)
             x = 300
             y = 300
-            img2.thumbnail((x, y), Image.ANTIALIAS)
+            img2.thumbnail((x*float(self.sizerate), y*float(self.sizerate)), Image.ANTIALIAS)
+            
             img2 = ImageTk.PhotoImage(img2)
             canvas = tkinter.Canvas(width=600, height=500)
             canvas.place(x=100, y=300)
             item = canvas.create_image(30, 30, image=img2, anchor=tkinter.NW)
             canvas.itemconfig(item,image=img2)
-            time.sleep(0.1) 
+            time.sleep(self.speed) 
+
     def button10_clicked(self):  
         ini_dir = 'C:'
         ret = tkinter.filedialog.askdirectory(initialdir=ini_dir, title='file dialog test', mustexist = True)
